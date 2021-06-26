@@ -10,4 +10,4 @@ In many cases I will not be creating classes and enums but rather single functio
 
 Some code is designed to be audio domain specific, others are general utilities
 
-most of these should be testable with godbolt.org unless otherwise noted
+Most of these should be testable with godbolt.org unless otherwise noted
