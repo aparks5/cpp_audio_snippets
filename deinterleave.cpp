@@ -10,8 +10,8 @@
 /// This code interleaves and de-interleaves arrays of ints and stores them in a single array.
 /// The trick to deinterleaving and interleaving lies entirely in how you think about the indexing.
 /// Interleaved samples are chunked into channel-groups, while de-interleaved samples are chunked into sample-groups.
-/// In interleaved buffers, each channel-group has a number of samples equal to the number of channels, with one sample represented per channel. 
-/// In deinterleaved buffers, each sample-group is number of samples equal to the size of the buffer, with each group representing one channel's buffer contents.
+/// In interleaved buffers, each channel-group has a number of samples equal to the number of channels, with each group containing only one sample per channel. 
+/// In deinterleaved buffers, each sample-group contains a number of samples equal to the size of the buffer, with each group representing one channel's buffer contents.
 
 // E.g. a 128 sample buffer interleaved for 2 channels would need
 // 256 samples. The interleaved buffer is 128 groups of 2. The de-interleaved buffer needs 256 samples, but is arranged like 2 groups of 128.
