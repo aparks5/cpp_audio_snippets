@@ -12,6 +12,17 @@
 /// Interleaved samples are chunked into channel-groups, while de-interleaved samples are chunked into sample-groups.
 /// In interleaved buffers, each channel-group is as long as the number of samples in the buffer. So a 128 sample buffer interleaved for 2 channels would need
 /// 256 samples. The interleaved buffer is 128 groups of 2. The de-interleaved buffer needs 256 samples, but is arranged like 2 groups of 128.
+
+/// INTERLEAVED:
+// | L R | L R | L R | L R | etc.
+// |--^--|
+// |group|group|group|
+///
+/// DE-INTERLEAVED:
+/// | L L L L etc. | R R R R etc. |
+//  |-------^------|
+//  |     group    |    group     |
+
 // This means that if we go "looking for stuff" inside buffers, we need to look at the logical groupings within the buffers and advance by "sub-indexing".
 //
 // In other words, if you have a single contiguous array that is grouped somehow logically within it, you need to index by the following:
@@ -63,7 +74,6 @@ void testDeinterleave()
             printf("%d", arr[(nChans*samp)+chan]);
        }
     }
-
 
     printf("\nstored and deinterleaved\n");
     for (size_t chan = 0; chan < nChans; chan++) {
