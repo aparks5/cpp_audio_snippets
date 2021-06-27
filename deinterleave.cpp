@@ -10,19 +10,22 @@
 /// This code interleaves and de-interleaves arrays of ints and stores them in a single array.
 /// The trick to deinterleaving and interleaving lies entirely in how you think about the indexing.
 /// Interleaved samples are chunked into channel-groups, while de-interleaved samples are chunked into sample-groups.
-/// In interleaved buffers, each channel-group is as long as the number of samples in the buffer. So a 128 sample buffer interleaved for 2 channels would need
-/// 256 samples. The interleaved buffer is 128 groups of 2. The de-interleaved buffer needs 256 samples, but is arranged like 2 groups of 128.
+/// In interleaved buffers, each channel-group has a number of samples equal to the number of channels, with one sample represented per channel. 
+/// In deinterleaved buffers, each sample-group is number of samples equal to the size of the buffer, with each group representing one channel's buffer contents.
 
-/// INTERLEAVED:
+// E.g. a 128 sample buffer interleaved for 2 channels would need
+// 256 samples. The interleaved buffer is 128 groups of 2. The de-interleaved buffer needs 256 samples, but is arranged like 2 groups of 128.
+//
+// INTERLEAVED:
 // | L R | L R | L R | L R | etc.
 // |--^--|
 // |group|group|group|
-///
-/// DE-INTERLEAVED:
+//
+//  DE-INTERLEAVED:
 /// | L L L L etc. | R R R R etc. |
 //  |-------^------|
 //  |     group    |    group     |
-
+//
 // This means that if we go "looking for stuff" inside buffers, we need to look at the logical groupings within the buffers and advance by "sub-indexing".
 //
 // In other words, if you have a single contiguous array that is grouped somehow logically within it, you need to index by the following:
@@ -86,9 +89,9 @@ void testInterleave()
     printf("\n-----------------\n");
     printf("deinterleaved input\n");
     for (size_t chan = 0; chan < nchans; chan++)
-    for (size_t samp = 0; samp < sampsPerChan; samp++) {
-        printf("%d", input[(chan*sampsPerChan) + samp]);
-        output[(nchans*samp) + chan] = input[(sampsPerChan * chan) + samp];
+        for (size_t samp = 0; samp < sampsPerChan; samp++) {
+            printf("%d", input[(chan*sampsPerChan) + samp]);
+            output[(nchans*samp) + chan] = input[(sampsPerChan * chan) + samp];
     }
     printf("\n");
     printf("interleaved output:\n");
