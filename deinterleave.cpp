@@ -26,7 +26,7 @@
 //  |-------^------|
 //  |     group    |    group     |
 //
-// This means that if we go "looking for stuff" inside buffers, we need to look at the logical groupings within the buffers and advance by "sub-indexing".
+// This means that if we go looking for particular samples inside buffers, we need to look at the logical groupings within the buffers and advance by "sub-indexing".
 //
 // In other words, if you have a single contiguous array that is grouped somehow logically within it, you need to index by the following:
 //
