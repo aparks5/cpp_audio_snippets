@@ -51,29 +51,17 @@ void testDeinterleave()
     size_t nSamps = 4;
     int arr[8] = {0,1,0,1,0,1,0,1};
 
-    printf("input\n");
+    printf("\n-----------------\n");
+    printf("interleaved input\n");
+    
     for (size_t chan = 0; chan < nChans; chan++) {
         for (size_t samp = 0; samp < nSamps; samp++) {
             printf("%d", arr[samp+(frameLen*chan)]);
         }
     }
-
-    printf("\noutput pre deinterleaved\n");
-    int out[8];
-    memset(out, 0, sizeof(out));
-    for (size_t chan = 0; chan < nChans; chan++) {
-        for (size_t samp = 0; samp < nSamps; samp++) {
-            printf("%d", out[samp+(frameLen*chan)]);
-        }
-    }
-
-    printf("\ndeinterleaved\n");
-
-    for (size_t chan = 0; chan < nChans; chan++) {
-        for (size_t samp = 0; samp < nSamps; samp++) {
-            printf("%d", arr[(nChans*samp)+chan]);
-       }
-    }
+    
+    printf("\n");
+    printf("deinterleaved output \n");
 
     printf("\nstored and deinterleaved\n");
     for (size_t chan = 0; chan < nChans; chan++) {
@@ -94,7 +82,8 @@ void testInterleave()
     // should output 1,2,3,4,1,2,3,4,1,2,3,4 when interleaved
     int output[12];
     memset(output, 0, sizeof(output));
-
+    
+    printf("\n-----------------\n");
     printf("deinterleaved input\n");
     for (size_t chan = 0; chan < nchans; chan++)
     for (size_t samp = 0; samp < sampsPerChan; samp++) {
@@ -112,10 +101,6 @@ void testInterleave()
 int main(int argc, char** argv)
 {
     testDeinterleave();
-    printf("\n------------------------------------------\n");
     testInterleave();
     return 0;
 }
-
-
-
