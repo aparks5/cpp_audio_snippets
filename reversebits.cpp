@@ -9,8 +9,6 @@
 
 /// reverse bits in 32 bit integer
 
-/// https://aticleworld.com/5-way-to-reverse-bits-of-an-integer/
-
 void printBinary(uint32_t input)
 {
     size_t bits = sizeof(input)*8;
