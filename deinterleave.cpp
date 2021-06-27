@@ -33,7 +33,7 @@
 // x[groupSizeOffset + subIndexOfInterest]
 //
 // The group size of an interleaved buffer is going to be the number of channels. The offset is calculated by multiplying the group size by the group index.
-// In interleaved audio, we group by clusters of channel data. The sub-indexes within each group are each channel.
+// In interleaved audio, we group by clusters of channel data for one sample. So the group index is the sample index of the buffer. The sub-indices within an individual group are indicated by each channel.
 //
 // In a de-interleaved buffer, the group size is the number of samples. The offset is also calculated by multiplying the group size by the group index. However, in this case
 // our group size is the total number of samples, and the group index is the channel index. We sub-index into each de-interleaved group by looking at a particular sample.
