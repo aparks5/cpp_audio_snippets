@@ -16,7 +16,12 @@ void hp_filter(float coef, float in, float* out, float* delay)
 
 void run(float* in, float* out, size_t bufLen)
 {
-    float coef = 0.5f;
+    // upper limit is 0.49 for this filter
+    float coef = 0.49f;
+
+    // clamp value
+    coef = (coef > 0.49f) ? 0.49 : coef;
+
     float delay = 0.0f;
 
     for (size_t idx = 0; idx < bufLen; idx++) {
@@ -35,11 +40,17 @@ int main()
     float half_nyquist[6] = {1, 0, -1, 0, 1, 0};
     float quarter_nyquist[9] = {0, 0.707, 1, 0.707, 0, -0.707, -1, -0.707, 0};
 
-    size_t bufLen = RARRSIZE(dc_step);
-    float* out = new float[bufLen];
+    float* out = new float[128];
     memset(out, 0, sizeof(out));
 
-    run(dc_step, out, bufLen);
+    printf("DC step sequence:\n");
+    run(dc_step, out, RARRSIZE(dc_step));
+    printf("--------------------\n");
+
+    printf("quarter nyquist sequence:\n");
+    run(quarter_nyquist, out, RARRSIZE(quarter_nyquist));
+    printf("--------------------\n");
+
 
     delete[] out;
 
