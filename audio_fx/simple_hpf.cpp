@@ -31,6 +31,24 @@ void run(float* in, float* out, size_t bufLen)
 
 }
 
+
+float dBtoFloatGain(int db)
+{
+    return pow(10.0f, db/20.0f);
+}
+
+void applyGain(float fGain, float* in, size_t bufLen)
+{
+    printf("-------------\n");
+    printf("applying gain:\n");
+    for (size_t idx = 0; idx < bufLen; idx++) {
+        printf("in[%d]: %f,", idx, in[idx]);
+        in[idx] *= fGain;
+        printf("out[%d]: %f\n", idx, in[idx]);
+
+    }
+}
+
 int main()
 {
     printf("one-sample highpass filter\n");
@@ -52,7 +70,24 @@ int main()
     printf("--------------------\n");
 
 
-    delete[] out;
 
+
+    // add volume scaling after processing
+    printf("volume conversions:\n");
+    int vol = -30; 
+    printf("volume %d dB to float gain: %f\n", vol, dBtoFloatGain(vol));
+    vol = -20; 
+    printf("volume %d dB to float gain: %f\n", vol, dBtoFloatGain(vol));
+    vol = -10; 
+    printf("volume %d dB to float gain: %f\n", vol, dBtoFloatGain(vol));
+    vol = 0; 
+    printf("volume %d dB to float gain: %f\n", vol, dBtoFloatGain(vol));
+    vol = 10; 
+    printf("volume %d dB to float gain: %f\n", vol, dBtoFloatGain(vol));
+
+    applyGain(dBtoFloatGain(-10), out, RARRSIZE(quarter_nyquist));
+
+
+    delete[] out;
     return 0;
 }
