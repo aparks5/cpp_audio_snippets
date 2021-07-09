@@ -18,6 +18,10 @@ size_t getbits(uint8_t* arr, size_t arrLen, size_t* result, size_t bitPos, size_
         readBits = 8;
     }
 
+    if ((bitPos % 8) + numBits > 8) {
+        readBits = 8 - (bitPos % 8);
+    }
+
     size_t bytePos = floor(bitPos / 8);
     *result |= arr[bytePos] >> (8 - (bitPos % 8) - readBits) & ((1 << readBits) - 1) ;
     bitPos += readBits;
